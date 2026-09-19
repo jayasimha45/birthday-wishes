@@ -1,0 +1,17 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.whl
+
+# --- Runtime app state (never commit secrets / sessions) ---
+data/notified.json
+data/notify.log
+data/sessions.json
+data/uploads/
+server.log
+*.log
+
+# --- OS / editor ---
+Thumbs.db
+Desktop.ini
+.venv/

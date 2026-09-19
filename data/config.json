@@ -1,0 +1,17 @@
+{
+  "whatsapp": {
+    "enabled": false,
+    "provider": "twilio",
+    "account_sid": "",
+    "auth_token": "",
+    "from_number": "whatsapp:+14155238886",
+    "recipients": [],
+    "time": "09:00"
+  },
+  "google_oauth": {
+    "enabled": false,
+    "client_id": "",
+    "client_secret": "",
+    "redirect_uri": "http://localhost:8000/api/auth/google/callback"
+  }
+}

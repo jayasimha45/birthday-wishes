@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="confetti-canvas"></canvas>
+
+  <main class="wrapper">
+    <nav class="topbar">
+      <span class="logo">🎂 Birthday Club</span>
+      <div id="auth-area">
+        <button type="button" class="auth-btn" id="auth-btn">Sign in / Join</button>
+      </div>
+    </nav>
+
+    <section class="card" id="wish-card">
+      <div class="balloons">
+        <div class="balloon b1"></div>
+        <div class="balloon b2"></div>
+        <div class="balloon b3"></div>
+        <div class="balloon b4"></div>
+      </div>
+
+      <header>
+        <p class="wish">
+          <span class="to">Dear</span>
+          <span class="name" contenteditable="true" id="name">Friend</span>,
+        </p>
+        <h1>🎂 Happy Birthday! 🎂</h1>
+        <p class="message">
+          Wishing you a day filled with love, laughter, and all the cake you can eat.
+          May this new year of your life bring you endless joy, amazing adventures,
+          and dreams that come true. You deserve the world!
+        </p>
+      </header>
+
+      <section class="cake-area">
+        <div class="cake">
+          <div class="plate"></div>
+          <div class="cream"></div>
+          <div class="candles">
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+          </div>
+          <div class="layer layer-1"></div>
+          <div class="layer layer-2"></div>
+          <div class="sprinkles"></div>
+        </div>
+      </section>
+
+      <button id="blow-out">Blow out the candles 🕯️</button>
+      <p class="hint">Or click the candles to blow them out yourself!</p>
+
+      <footer>
+        <p>Made with ❤️ for your special day</p>
+      </footer>
+    </section>
+
+    <section class="registry" id="registry">
+      <div class="registry-head">
+        <h2>🎈 The Birthday Club</h2>
+        <p id="registry-count">Loading members…</p>
+        <div class="notify-status" id="notify-status">
+          <span class="dot"></span>
+          <span id="notify-text">WhatsApp notifications: checking…</span>
+          <button type="button" class="link-btn" id="open-settings">⚙️ Settings</button>
+        </div>
+      </div>
+      <div class="members" id="members"></div>
+      <button class="add-member" id="add-member">Register yourself 🗓️</button>
+    </section>
+  </main>
+
+  <dialog id="register-dialog">
+    <form id="register-form" novalidate>
+      <h3>🎊 Register your birthday</h3>
+      <label for="reg-name">Full name</label>
+      <input type="text" id="reg-name" placeholder="e.g. Alex Smith" maxlength="100" required />
+
+      <label for="reg-dob">Date of birth</label>
+      <input type="date" id="reg-dob" required />
+
+      <label for="reg-photo">Photo</label>
+      <div class="photo-pick">
+        <div class="photo-preview" id="photo-preview">
+          <span class="placeholder">📷</span>
+        </div>
+        <div class="photo-controls">
+          <input type="file" id="reg-photo" accept="image/png,image/jpeg,image/gif,image/webp" />
+          <span class="small">JPEG, PNG, GIF or WEBP · max 5 MB</span>
+        </div>
+      </div>
+
+      <p class="form-error" id="form-error"></p>
+
+      <div class="form-actions">
+        <button type="button" class="ghost" id="cancel-register">Cancel</button>
+        <button type="submit" class="primary" id="submit-register">Save me! 🎂</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settings-dialog">
+    <form id="settings-form" novalidate>
+      <h3>💬 WhatsApp notifications</h3>
+      <p class="small">Sent automatically on every member's birthday via Twilio (free trial available). Recipients must opt in through your Twilio sandbox before receiving messages.</p>
+
+      <label for="wa-enabled" class="check-row">
+        <input type="checkbox" id="wa-enabled" />
+        <span>Turn on WhatsApp birthday messages</span>
+      </label>
+
+      <label for="wa-sid">Twilio Account SID</label>
+      <input type="text" id="wa-sid" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+
+      <label for="wa-token">Twilio Auth Token</label>
+      <input type="password" id="wa-token" placeholder="Leave blank to keep saved one" autocomplete="new-password" />
+
+      <div class="row">
+        <div class="col">
+          <label for="wa-from">WhatsApp sender (From)</label>
+          <input type="text" id="wa-from" placeholder="whatsapp:+14155238886" />
+        </div>
+        <div class="col">
+          <label for="wa-time">Send time (24h)</label>
+          <input type="time" id="wa-time" value="09:00" />
+        </div>
+      </div>
+
+      <label for="wa-recipients">Recipients (WhatsApp numbers, comma separated)</label>
+      <textarea id="wa-recipients" rows="2" placeholder="+919876543210, +14155552671"></textarea>
+
+      <div class="form-actions">
+        <button type="button" class="ghost" id="send-wa-test">Send test message 💬</button>
+      </div>
+
+      <hr class="divider" />
+      <h4>🇬 Google sign-in</h4>
+      <p class="small">Lets members sign in with Google. Get OAuth credentials at console.cloud.google.com → APIs & Services → Credentials → OAuth client ID (Web).</p>
+
+      <label for="g-enabled" class="check-row">
+        <input type="checkbox" id="g-enabled" />
+        <span>Turn on Google sign-in</span>
+      </label>
+
+      <label for="g-client-id">OAuth Client ID</label>
+      <input type="text" id="g-client-id" placeholder="xxxx.apps.googleusercontent.com" autocomplete="off" />
+
+      <label for="g-client-secret">Client Secret</label>
+      <input type="password" id="g-client-secret" placeholder="Leave blank to keep saved one" autocomplete="new-password" />
+
+      <label for="g-redirect">Redirect URI</label>
+      <input type="text" id="g-redirect" placeholder="http://localhost:8000/api/auth/google/callback" />
+
+      <p class="form-error" id="settings-error"></p>
+
+      <div class="form-actions">
+        <button type="button" class="ghost" id="cancel-settings">Cancel</button>
+        <button type="submit" class="primary" id="save-settings">Save settings 💾</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="auth-dialog">
+    <div class="auth-head">
+      <h3>🔐 Join the Birthday Club</h3>
+      <p class="small">One account — sign in anytime with an OTP or your Google account.</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button type="button" class="tab active" data-tab="phone">📱 Phone (OTP)</button>
+      <button type="button" class="tab" data-tab="google">🇬 Google</button>
+    </div>
+
+    <div id="auth-panel-phone" class="auth-panel">
+      <label for="auth-phone">WhatsApp phone number</label>
+      <input type="tel" id="auth-phone" placeholder="+919876543210" autocomplete="tel" />
+      <button type="button" class="primary auth-action" id="send-otp">Send OTP 💬</button>
+
+      <div id="otp-box" hidden>
+        <label for="auth-otp">Enter the 6-digit OTP</label>
+        <input type="text" id="auth-otp" inputmode="numeric" maxlength="6" placeholder="123456" />
+        <div class="auth-row">
+          <button type="button" class="ghost auth-action" id="resend-otp">Resend</button>
+          <button type="button" class="primary auth-action" id="verify-otp">Verify & continue ✅</button>
+        </div>
+      </div>
+      <p class="small">New number? It signs you up automatically.</p>
+    </div>
+
+    <div id="auth-panel-google" class="auth-panel" hidden>
+      <p class="small">Use your Google account to sign up or sign in instantly.</p>
+      <button type="button" class="google-btn" id="google-signin">
+        <span class="g-logo">G</span> Continue with Google
+      </button>
+    </div>
+
+    <p class="form-error" id="auth-error"></p>
+
+    <div class="form-actions">
+      <button type="button" class="ghost" id="cancel-auth">Close</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
