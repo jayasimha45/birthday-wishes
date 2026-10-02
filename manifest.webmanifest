@@ -1,0 +1,11 @@
+{
+  "name": "Birthday Wishes",
+  "short_name": "Birthday Wishes",
+  "description": "A special day for someone special.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10151d",
+  "theme_color": "#10151d",
+  "icons": [{ "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

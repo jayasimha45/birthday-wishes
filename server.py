@@ -17,7 +17,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 PEOPLE_FILE = os.path.join(DATA_DIR, "people.json")
-CONFIG_FILE = os.path.join(DATA_DIR, "config.json")
+CONFIG_FILE = os.path.join(DATA_DIR, "config.local.json")
+LEGACY_CONFIG_FILE = os.path.join(DATA_DIR, "config.json")
 NOTIFIED_FILE = os.path.join(DATA_DIR, "notified.json")
 USERS_FILE = os.path.join(DATA_DIR, "users.json")
 SESSIONS_FILE = os.path.join(DATA_DIR, "sessions.json")
@@ -54,10 +55,6 @@ DEFAULT_CONFIG = {
     },
 }
 
-if not os.path.exists(CONFIG_FILE):
-    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-        json.dump(DEFAULT_CONFIG, f, ensure_ascii=False, indent=2)
-
 MIME_TYPES = {
     ".html": "text/html; charset=utf-8",
     ".css": "text/css; charset=utf-8",
@@ -70,6 +67,7 @@ MIME_TYPES = {
     ".webp": "image/webp",
     ".ico": "image/x-icon",
     ".json": "application/json; charset=utf-8",
+    ".webmanifest": "application/manifest+json; charset=utf-8",
 }
 
 DEFAULT = "application/octet-stream"
@@ -100,7 +98,8 @@ def save_people(people):
 
 def load_config():
     try:
-        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+        source = CONFIG_FILE if os.path.exists(CONFIG_FILE) else LEGACY_CONFIG_FILE
+        with open(source, "r", encoding="utf-8") as f:
             cfg = json.load(f)
     except (json.JSONDecodeError, OSError):
         cfg = {}
@@ -677,10 +676,16 @@ class Handler(BaseHTTPRequestHandler):
         if not person_id:
             return send_json(self, 400, {"ok": False, "error": "Missing id"})
 
+        user = self._current_user()
+        if not user:
+            return send_json(self, 401, {"ok": False, "error": "Sign in to manage your birthday registration."})
+
         people = load_people()
         removed = [p for p in people if p.get("id") == person_id]
         if not removed:
             return send_json(self, 404, {"ok": False, "error": "Person not found"})
+        if removed[0].get("user_id") != user.get("id"):
+            return send_json(self, 403, {"ok": False, "error": "You can only remove your own registration."})
 
         people = [p for p in people if p.get("id") != person_id]
         photo = removed[0].get("photo")
@@ -777,6 +782,8 @@ class Handler(BaseHTTPRequestHandler):
         send_json(self, 201, {"ok": True, "person": person, "people": people, "user": public_user(user) if user else None})
 
     def _post_config(self):
+        if not self._current_user():
+            return send_json(self, 401, {"ok": False, "error": "Sign in to manage notification settings."})
         payload, _, err = self._read_json()
         if err:
             return send_json(self, 400, {"ok": False, "error": err})
@@ -789,6 +796,8 @@ class Handler(BaseHTTPRequestHandler):
         send_json(self, 200, config_public(cfg))
 
     def _post_notify_test_whatsapp(self):
+        if not self._current_user():
+            return send_json(self, 401, {"ok": False, "error": "Sign in to send a test message."})
         cfg = load_config().get("whatsapp", {})
         if not cfg.get("account_sid") or not cfg.get("auth_token"):
             return send_json(self, 400, {"ok": False, "error": "Save your WhatsApp settings first (Settings → Save)."})
@@ -841,7 +850,7 @@ class Handler(BaseHTTPRequestHandler):
         }
         is_new = find_user_by_phone(load_users(), digits) is None
         log_notify(f"OTP SENT -> {display_phone(digits)}")
-        send_json(self, 200, {"ok": True, "is_new": is_new, "otp_code": code, "error": None})
+        send_json(self, 200, {"ok": True, "is_new": is_new, "error": None})
 
     def _post_otp_verify(self):
         payload, _, err = self._read_json()
