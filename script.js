@@ -8,7 +8,7 @@ const ctx = confettiCanvas.getContext("2d");
 let particles = [];
 let raf = null;
 
-const COLORS = ["#ff6b6b", "#ff9f43", "#ffd93d", "#6bcb77", "#667eea", "#f2709c", "#4ecdc4"];
+const COLORS = ["#d8b77b", "#ecd6a4", "#f6f2ea", "#a88b5a"];
 
 function resize() {
   confettiCanvas.width = window.innerWidth;
@@ -102,12 +102,6 @@ blowButton.addEventListener("click", () => {
   const lit = extinguishAll();
   if (lit) {
     celebrate();
-    if ("speechSynthesis" in window) {
-      const utter = new SpeechSynthesisUtterance("Hip hip hooray! Happy birthday!");
-      utter.pitch = 1.2;
-      utter.rate = 1;
-      window.speechSynthesis.speak(utter);
-    }
   }
 });
 
@@ -403,11 +397,15 @@ function renderMembers() {
       avatar.textContent = initials(p.name);
     }
 
-    const remove = document.createElement("button");
-    remove.className = "member-remove";
-    remove.textContent = "✕";
-    remove.title = "Remove " + p.name;
-    remove.addEventListener("click", () => removeMember(p));
+    let remove = null;
+    if (isMine) {
+      remove = document.createElement("button");
+      remove.className = "member-remove";
+      remove.textContent = "✕";
+      remove.title = "Remove your registration";
+      remove.setAttribute("aria-label", "Remove your registration");
+      remove.addEventListener("click", () => removeMember(p));
+    }
 
     const name = document.createElement("p");
     name.className = "member-name";
@@ -423,7 +421,7 @@ function renderMembers() {
     wish.addEventListener("click", () => wishMember(p.name));
 
     card.appendChild(avatar);
-    card.appendChild(remove);
+    if (remove) card.appendChild(remove);
     card.appendChild(name);
     card.appendChild(dob);
     if (isBirthdayToday(p.dob)) {
@@ -622,6 +620,11 @@ const gRedirect = document.getElementById("g-redirect");
 
 document.getElementById("open-settings").addEventListener("click", async () => {
   settsError.textContent = "";
+  if (!currentUser) {
+    settsError.textContent = "Sign in to manage notification settings.";
+    settsDialog.showModal();
+    return;
+  }
   try {
     const res = await fetch("/api/config");
     const data = await res.json();
@@ -680,7 +683,7 @@ function settingsPayload() {
 async function fetchSettingsUpdate(route, okMessage) {
   settsError.textContent = "";
   try {
-    const res = await fetch(route, {
+    const res = await api(route, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(settingsPayload()),
@@ -713,7 +716,7 @@ sendWaTest.addEventListener("click", async () => {
   settsError.textContent = "Sending test WhatsApp message…";
   settsError.style.color = "#555";
   try {
-    const res = await fetch("/api/notify-test-whatsapp", { method: "POST" });
+    const res = await api("/api/notify-test-whatsapp", { method: "POST" });
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.error || "Test failed.");
     settsError.style.color = "#2e7d32";

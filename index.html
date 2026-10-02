@@ -1,81 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday!</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#10151d" />
+  <meta name="description" content="A beautiful, personalized birthday experience created to celebrate the people who make life special." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Birthday Wishes | A Special Day for Someone Special" />
+  <meta property="og:description" content="A beautiful, personalized birthday experience created to celebrate the people who make life special." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Birthday Wishes | A Special Day for Someone Special" />
+  <meta name="twitter:description" content="A beautiful, personalized birthday experience created to celebrate the people who make life special." />
+  <link rel="canonical" href="https://jayasimha45.github.io/birthday-wishes/" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Birthday Wishes | A Special Day for Someone Special</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="confetti-canvas"></canvas>
-
-  <main class="wrapper">
-    <nav class="topbar">
-      <span class="logo">🎂 Birthday Club</span>
-      <div id="auth-area">
-        <button type="button" class="auth-btn" id="auth-btn">Sign in / Join</button>
-      </div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <header class="site-header">
+  <a class="brand" href="#home" aria-label="Birthday Wishes home"><span class="brand-mark" aria-hidden="true">♛</span><span>Birthday Wishes</span></a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation"><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="#home" class="active">Home</a><a href="#surprise">Surprise</a><a href="#memories">Memories</a><a href="#message-section">Message</a><a href="#celebration">Celebration</a>
+      <button type="button" class="music-toggle" id="music-toggle" aria-pressed="false"><span class="music-note">♫</span><span id="music-label">Music Off</span></button>
+      <div id="auth-area"><button type="button" class="auth-btn" id="auth-btn">Sign in / Join</button></div>
     </nav>
-
-    <section class="card" id="wish-card">
-      <div class="balloons">
-        <div class="balloon b1"></div>
-        <div class="balloon b2"></div>
-        <div class="balloon b3"></div>
-        <div class="balloon b4"></div>
-      </div>
-
-      <header>
-        <p class="wish">
-          <span class="to">Dear</span>
-          <span class="name" contenteditable="true" id="name">Friend</span>,
-        </p>
-        <h1>🎂 Happy Birthday! 🎂</h1>
-        <p class="message">
-          Wishing you a day filled with love, laughter, and all the cake you can eat.
-          May this new year of your life bring you endless joy, amazing adventures,
-          and dreams that come true. You deserve the world!
-        </p>
-      </header>
-
-      <section class="cake-area">
-        <div class="cake">
-          <div class="plate"></div>
-          <div class="cream"></div>
-          <div class="candles">
-            <div class="candle"><div class="flame"></div></div>
-            <div class="candle"><div class="flame"></div></div>
-            <div class="candle"><div class="flame"></div></div>
-          </div>
-          <div class="layer layer-1"></div>
-          <div class="layer layer-2"></div>
-          <div class="sprinkles"></div>
-        </div>
-      </section>
-
-      <button id="blow-out">Blow out the candles 🕯️</button>
-      <p class="hint">Or click the candles to blow them out yourself!</p>
-
-      <footer>
-        <p>Made with ❤️ for your special day</p>
-      </footer>
+  </header>
+  <main>
+    <section class="hero full-screen" id="home" aria-labelledby="hero-title">
+      <div class="hero-image" role="img" aria-label="A quiet mountain lake at twilight"></div><div class="hero-shade"></div><div class="hero-grain"></div>
+      <div class="hero-copy reveal"><p class="eyebrow">A special day for a special you</p><h1 id="hero-title">Happy<br class="mobile-break" /> Birthday</h1><p class="script hero-name" id="hero-name">Dear Friend</p><p class="hero-message" id="hero-message">May your dreams be bigger, your smiles be brighter, and your journey be filled with endless happiness.</p><a class="button button-gold" href="#surprise">Open Your Surprise <span aria-hidden="true">→</span></a></div>
+      <div class="silhouette" aria-hidden="true"></div><a class="scroll-cue" href="#surprise"><span></span>Scroll down</a>
     </section>
 
-    <section class="registry" id="registry">
-      <div class="registry-head">
-        <h2>🎈 The Birthday Club</h2>
-        <p id="registry-count">Loading members…</p>
-        <div class="notify-status" id="notify-status">
-          <span class="dot"></span>
-          <span id="notify-text">WhatsApp notifications: checking…</span>
-          <button type="button" class="link-btn" id="open-settings">⚙️ Settings</button>
-        </div>
+    <section class="surprise section-dark" id="surprise" aria-labelledby="surprise-title">
+      <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div><div class="lantern lantern-one" aria-hidden="true"></div><div class="lantern lantern-two" aria-hidden="true"></div><div class="lantern lantern-three" aria-hidden="true"></div>
+      <div class="section-inner reveal"><p class="eyebrow">A little magic, just for you</p><h2 id="surprise-title">Something Special<br /><em>is Waiting for You...</em></h2><p class="section-intro">Take a moment, breathe... and get ready for a beautiful surprise.</p>
+        <div class="countdown" aria-label="Birthday countdown"><div class="count-card"><strong id="days">00</strong><span>Days</span></div><div class="count-card"><strong id="hours">00</strong><span>Hours</span></div><div class="count-card"><strong id="minutes">00</strong><span>Minutes</span></div><div class="count-card"><strong id="seconds">00</strong><span>Seconds</span></div></div>
+        <button class="gift" id="gift-open" type="button" aria-label="Open the birthday gift"><span class="gift-bow"></span><span class="gift-lid"></span><span class="gift-box"></span><span class="gift-ribbon"></span></button><p class="gift-hint">A little something, wrapped with love</p>
       </div>
-      <div class="members" id="members"></div>
-      <button class="add-member" id="add-member">Register yourself 🗓️</button>
     </section>
+
+    <section class="reveal-section section-ivory" id="reveal" aria-labelledby="reveal-title"><div class="reveal-grid section-inner">
+      <div class="gift-photo photo-frame reveal"><img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1100&q=85" alt="A thoughtfully wrapped gift ready to be opened" loading="lazy" /><div class="note-card"><span>You</span><strong>are special</strong><span class="heart">♡</span></div></div>
+      <div class="reveal-copy reveal"><p class="eyebrow">A note from the heart</p><h2 id="reveal-title">You're<br /><em>Amazing!</em></h2><p>On this special day, I just want to remind you how incredibly wonderful you are. You bring so much positivity, kindness and joy to everyone around you.</p><div class="candle-moment" id="wish-card"><p class="candle-label">Make a wish</p><div class="candles" aria-label="Three birthday candles"><button class="candle" type="button" aria-label="Blow out candle 1"><span class="flame"></span></button><button class="candle" type="button" aria-label="Blow out candle 2"><span class="flame"></span></button><button class="candle" type="button" aria-label="Blow out candle 3"><span class="flame"></span></button></div><p class="wish">Dear <span class="name" id="name">Friend</span></p><button class="text-button" id="blow-out" type="button">Blow out the candles <span aria-hidden="true">→</span></button></div><a class="text-button" href="#memories">Next <span aria-hidden="true">→</span></a><a class="skip-tour" href="#celebration">Skip tour</a></div>
+    </div></section>
+
+    <section class="memories section-dark" id="memories" aria-labelledby="memories-title"><div class="section-inner"><div class="section-heading reveal"><p class="eyebrow">Our memories</p><h2 id="memories-title">Moments That Matter</h2><p class="section-intro">Grateful for all the smiles, adventures and unforgettable moments we've shared together.</p></div>
+      <div class="gallery" id="gallery">
+        <button class="gallery-item gallery-tall" type="button" data-full="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=90" aria-label="View mountain lake at sunset"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80" alt="Mountain lake reflecting the last light of day" loading="lazy" /><span>Quiet horizons</span></button>
+        <button class="gallery-item" type="button" data-full="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1800&q=90" aria-label="View friends sharing a moment"><img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=900&q=80" alt="Friends sharing a joyful moment together" loading="lazy" /><span>The best company</span></button>
+        <button class="gallery-item gallery-wide" type="button" data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=90" aria-label="View a golden sunset landscape"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80" alt="Golden sunset over a peaceful landscape" loading="lazy" /><span>Golden hour</span></button>
+        <button class="gallery-item" type="button" data-full="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1800&q=90" aria-label="View ocean waves"><img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=80" alt="Soft waves folding onto the shore" loading="lazy" /><span>Somewhere by the sea</span></button>
+        <button class="gallery-item" type="button" data-full="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=90" aria-label="View the city lights at night"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=900&q=80" alt="City lights glowing beneath the night sky" loading="lazy" /><span>Under the same sky</span></button>
+        <button class="gallery-item extra-memory" type="button" data-full="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1800&q=90" aria-label="View friends celebrating together"><img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=80" alt="Friends celebrating together in the evening" loading="lazy" /><span>All together</span></button>
+        <button class="gallery-item extra-memory" type="button" data-full="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1800&q=90" aria-label="View a winding road through nature"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80" alt="A quiet road winding through a green landscape" loading="lazy" /><span>The long way home</span></button>
+      </div><button class="button button-outline" id="view-more" type="button">View More Memories <span aria-hidden="true">＋</span></button>
+    </div></section>
+
+    <section class="message-section section-ivory" id="message-section" aria-labelledby="message-title"><div class="message-grid section-inner"><div class="letter-scene reveal"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85" alt="A handwritten letter on a warmly lit desk" loading="lazy" /><div class="letter-overlay"><span>May all your</span><strong>dreams come true</strong><span class="heart">♡</span></div></div><div class="letter-copy reveal"><p class="eyebrow">A special message</p><h2 id="message-title">Just For You</h2><p>Life is not just about the destination, but the people who make the journey beautiful. You are one of those rare people who make every moment brighter. Keep being you — kind, strong, and full of dreams.</p><p class="message-signoff">Happy Birthday!<br /><span>With all my heart,<br />Always <b>♡</b></span></p></div></div></section>
+
+    <section class="celebration" id="celebration" aria-labelledby="celebration-title"><div class="city-image" role="img" aria-label="A city skyline glowing after dark"></div><div class="celebration-shade"></div><div class="celebration-content section-inner reveal"><p class="eyebrow">Here's to another beautiful year</p><h2 id="celebration-title">It's Your Day!</h2><p>Celebrate. Be Happy. You Deserve It.</p><p class="script birthday-script">Happy<br />Birthday <span>♡</span></p><button class="button button-gold" id="make-wish" type="button">☆ Make a Wish</button><div class="wish-words"><span>Dream Big</span><span>Stay Happy</span><span>Keep Shining</span><span>You Got This</span></div></div></section>
+
+    <section class="registry-wrap section-dark" id="birthday-club"><div class="section-inner">
+      <div class="registry-head"><p class="eyebrow">A little corner for everyone</p><h2>The Birthday Club</h2><p id="registry-count">Loading members…</p><div class="notify-status" id="notify-status"><span class="dot"></span><span id="notify-text">WhatsApp notifications: checking…</span><button type="button" class="link-btn" id="open-settings">Settings</button></div></div>
+      <div class="members" id="members"></div><button type="button" class="add-member" id="add-member">Register yourself</button>
+    </div></section>
   </main>
-
+  <footer class="site-footer"><div class="footer-main section-inner"><div><a class="brand" href="#home"><span class="brand-mark">♛</span><span>Birthday Wishes</span></a><p>Because every special person deserves<br />a special day.</p></div><div class="share-block"><p class="eyebrow">Share the joy</p><div class="social-links"><a href="https://wa.me/?text=Celebrate%20a%20special%20day%20with%20me" aria-label="Share on WhatsApp">Wa</a><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjayasimha45.github.io%2Fbirthday-wishes%2F" aria-label="Share on Facebook">f</a><a href="https://twitter.com/intent/tweet?text=A%20special%20birthday%20experience" aria-label="Share on X">𝕏</a><a href="https://www.instagram.com/" aria-label="Instagram">Ig</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjayasimha45.github.io%2Fbirthday-wishes%2F" aria-label="Share on LinkedIn">in</a></div></div><p class="footer-note">The best is yet to come... <span>♡</span></p></div><div class="footer-bottom section-inner">© 2026 Birthday Wishes. Made with <span>♥</span> for amazing people.</div></footer>
   <dialog id="register-dialog">
     <form id="register-form" novalidate>
       <h3>🎊 Register your birthday</h3>
@@ -207,6 +205,7 @@
     </div>
   </dialog>
 
-  <script src="script.js"></script>
+  <dialog class="lightbox" id="lightbox" aria-label="Memory photograph"><button class="lightbox-close" type="button" aria-label="Close image">×</button><button class="lightbox-prev" type="button" aria-label="Previous image">‹</button><img id="lightbox-image" alt="" /><button class="lightbox-next" type="button" aria-label="Next image">›</button><p id="lightbox-caption"></p></dialog>
+  <script src="data/birthday-config.js"></script><script src="script.js"></script><script src="js/experience.js"></script>
 </body>
 </html>
